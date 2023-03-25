@@ -3,7 +3,7 @@ module "ec2_public" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "2.17.0"
   # insert the 10 required variables here
-  name                   = "${var.environment}-BastionHost"
+  name                   = "EC2-BastionHost-Public"
   #instance_count         = 5
   ami                    = data.aws_ami.amzlinux2.id
   instance_type          = var.instance_type
@@ -11,7 +11,6 @@ module "ec2_public" {
   #monitoring             = true
   subnet_id              = module.vpc.public_subnets[0]
   vpc_security_group_ids = [module.public_bastion_sg.this_security_group_id]
-  tags = "public-ec2"
 }
 
 # EC2 Instances that will be created in VPC Private Subnets
@@ -20,7 +19,7 @@ module "ec2_private" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "2.17.0"
   # insert the 10 required variables here
-  name                   = "${var.environment}-vm"
+  name                   = "EC2-VPC-Private"
   ami                    = data.aws_ami.amzlinux2.id
   instance_type          = var.instance_type
   key_name               = var.instance_keypair
@@ -33,5 +32,4 @@ module "ec2_private" {
   ]  
   instance_count         = var.private_instance_count
   user_data = file("${path.module}/apache-install.sh")
-  tags = "private-ec2"
 }
