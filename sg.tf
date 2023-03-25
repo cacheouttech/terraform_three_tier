@@ -12,7 +12,6 @@ module "public_bastion_sg" {
   ingress_cidr_blocks = ["0.0.0.0/0"]
   # Egress Rule - all-all open
   egress_rules = ["all-all"]
-  tags = "bastion-sg"  
 }
 
 # Security Group for Private EC2 Instances
@@ -28,5 +27,4 @@ module "private_sg" {
   ingress_cidr_blocks = [module.vpc.vpc_cidr_block]
   # Egress Rule - all-all open
   egress_rules = ["all-all"]
-  tags = "private-ec2-sg"
 }
